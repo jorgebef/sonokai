@@ -12,7 +12,7 @@ if exists('syntax_on')
   syntax reset
 endif
 
-let g:colors_name = 'sonokai'
+let g:colors_name = 'sonokai_belf'
 
 if !(has('termguicolors') && &termguicolors) && !has('gui_running') && &t_Co != 256
   finish
@@ -41,7 +41,7 @@ else
   call sonokai#highlight('Folded', s:palette.grey, s:palette.bg1)
   call sonokai#highlight('ToolbarLine', s:palette.fg, s:palette.bg2)
   if s:configuration.sign_column_background ==# 'default'
-    call sonokai#highlight('SignColumn', s:palette.fg, s:palette.bg1)
+    call sonokai#highlight('SignColumn', s:palette.fg, s:palette.bg0)
     call sonokai#highlight('FoldColumn', s:palette.grey, s:palette.bg1)
   else
     call sonokai#highlight('SignColumn', s:palette.fg, s:palette.none)
@@ -119,10 +119,10 @@ if has('nvim')
   highlight! link healthError Red
   highlight! link healthSuccess Green
   highlight! link healthWarning Yellow
-  highlight! link LspDiagnosticsError Grey
-  highlight! link LspDiagnosticsWarning Grey
+  highlight! link LspDiagnosticsError Red
+  highlight! link LspDiagnosticsWarning Yellow
   highlight! link LspDiagnosticsInformation Grey
-  highlight! link LspDiagnosticsHint Grey
+  highlight! link LspDiagnosticsHint none
   highlight! link LspReferenceText CurrentWord
   highlight! link LspReferenceRead CurrentWord
   highlight! link LspReferenceWrite CurrentWord
@@ -211,12 +211,12 @@ if s:configuration.transparent_background || s:configuration.sign_column_backgro
   call sonokai#highlight('BlueSign', s:palette.blue, s:palette.none)
   call sonokai#highlight('PurpleSign', s:palette.purple, s:palette.none)
 else
-  call sonokai#highlight('RedSign', s:palette.red, s:palette.bg1)
-  call sonokai#highlight('OrangeSign', s:palette.orange, s:palette.bg1)
-  call sonokai#highlight('YellowSign', s:palette.yellow, s:palette.bg1)
-  call sonokai#highlight('GreenSign', s:palette.green, s:palette.bg1)
-  call sonokai#highlight('BlueSign', s:palette.blue, s:palette.bg1)
-  call sonokai#highlight('PurpleSign', s:palette.purple, s:palette.bg1)
+  call sonokai#highlight('RedSign', s:palette.red, s:palette.bg0)
+  call sonokai#highlight('OrangeSign', s:palette.orange, s:palette.bg0)
+  call sonokai#highlight('YellowSign', s:palette.yellow, s:palette.bg0)
+  call sonokai#highlight('GreenSign', s:palette.green, s:palette.bg0)
+  call sonokai#highlight('BlueSign', s:palette.blue, s:palette.bg0)
+  call sonokai#highlight('PurpleSign', s:palette.purple, s:palette.bg0)
 endif
 if s:configuration.diagnostic_line_highlight
   call sonokai#highlight('ErrorLine', s:palette.bg0, s:palette.red)
@@ -359,8 +359,8 @@ highlight! link CocExplorerFileRootName Orange
 highlight! link CocExplorerBufferNameVisible Green
 " }}}
 " prabirshrestha/vim-lsp {{{
-highlight! link LspErrorVirtual Grey
-highlight! link LspWarningVirtual Grey
+highlight! link LspErrorVirtual Red
+highlight! link LspWarningVirtual Yellow
 highlight! link LspInformationVirtual Grey
 highlight! link LspHintVirtual Grey
 highlight! link LspErrorHighlight CocErrorHighlight

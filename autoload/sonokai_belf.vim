@@ -1,27 +1,27 @@
 " =============================================================================
-" URL: https://github.com/sainnhe/sonokai
-" Filename: autoload/sonokai.vim
+" URL: https://github.com/sainnhe/sonokai_belf
+" Filename: autoload/sonokai_belf.vim
 " Author: sainnhe
 " Email: sainnhe@gmail.com
 " License: MIT License
 " =============================================================================
 
-function! sonokai#get_configuration() "{{{
+function! sonokai_belf#get_configuration() "{{{
   return {
-        \ 'style': get(g:, 'sonokai_style', 'default'),
-        \ 'transparent_background': get(g:, 'sonokai_transparent_background', 0),
-        \ 'disable_italic_comment': get(g:, 'sonokai_disable_italic_comment', 0),
-        \ 'enable_italic': get(g:, 'sonokai_enable_italic', 0),
-        \ 'cursor': get(g:, 'sonokai_cursor', 'auto'),
-        \ 'menu_selection_background': get(g:, 'sonokai_menu_selection_background', 'green'),
-        \ 'sign_column_background': get(g:, 'sonokai_sign_column_background', 'default'),
-        \ 'current_word': get(g:, 'sonokai_current_word', get(g:, 'sonokai_transparent_background', 0) == 0 ? 'grey background' : 'bold'),
-        \ 'lightline_disable_bold': get(g:, 'sonokai_lightline_disable_bold', 0),
-        \ 'diagnostic_line_highlight': get(g:, 'sonokai_diagnostic_line_highlight', 0),
-        \ 'better_performance': get(g:, 'sonokai_better_performance', 0),
+        \ 'style': get(g:, 'sonokai_belf_style', 'default'),
+        \ 'transparent_background': get(g:, 'sonokai_belf_transparent_background', 0),
+        \ 'disable_italic_comment': get(g:, 'sonokai_belf_disable_italic_comment', 0),
+        \ 'enable_italic': get(g:, 'sonokai_belf_enable_italic', 0),
+        \ 'cursor': get(g:, 'sonokai_belf_cursor', 'auto'),
+        \ 'menu_selection_background': get(g:, 'sonokai_belf_menu_selection_background', 'green'),
+        \ 'sign_column_background': get(g:, 'sonokai_belf_sign_column_background', 'default'),
+        \ 'current_word': get(g:, 'sonokai_belf_current_word', get(g:, 'sonokai_belf_transparent_background', 0) == 0 ? 'grey background' : 'bold'),
+        \ 'lightline_disable_bold': get(g:, 'sonokai_belf_lightline_disable_bold', 0),
+        \ 'diagnostic_line_highlight': get(g:, 'sonokai_belf_diagnostic_line_highlight', 0),
+        \ 'better_performance': get(g:, 'sonokai_belf_better_performance', 0),
         \ }
 endfunction "}}}
-function! sonokai#get_palette(style) "{{{
+function! sonokai_belf#get_palette(style) "{{{
   if a:style ==# 'default'
     let palette = {
           \ 'black':      ['#181819',   '237',  'DarkGrey'],
@@ -150,7 +150,7 @@ function! sonokai#get_palette(style) "{{{
   endif
   return palette
 endfunction "}}}
-function! sonokai#highlight(group, fg, bg, ...) "{{{
+function! sonokai_belf#highlight(group, fg, bg, ...) "{{{
   execute 'highlight' a:group
         \ 'guifg=' . a:fg[0]
         \ 'guibg=' . a:bg[0]
@@ -172,57 +172,57 @@ function! sonokai#highlight(group, fg, bg, ...) "{{{
           \ a:2[0] :
           \ 'NONE')
 endfunction "}}}
-function! sonokai#ft_gen(path, last_modified, msg) "{{{
+function! sonokai_belf#ft_gen(path, last_modified, msg) "{{{
   " Generate the `after/ftplugin` directory.
-  let full_content = join(readfile(a:path), "\n") " Get the content of `colors/sonokai.vim`
+  let full_content = join(readfile(a:path), "\n") " Get the content of `colors/sonokai_belf.vim`
   let ft_content = []
-  let rootpath = sonokai#ft_rootpath(a:path) " Get the path to place the `after/ftplugin` directory.
+  let rootpath = sonokai_belf#ft_rootpath(a:path) " Get the path to place the `after/ftplugin` directory.
   call substitute(full_content, '" ft_begin.\{-}ft_end', '\=add(ft_content, submatch(0))', 'g') " Search for 'ft_begin.\{-}ft_end' (non-greedy) and put all the search results into a list.
   for content in ft_content
     let ft_list = []
     call substitute(matchstr(matchstr(content, 'ft_begin:.\{-}{{{'), ':.\{-}{{{'), '\(\w\|-\)\+', '\=add(ft_list, submatch(0))', 'g') " Get the file types. }}}}}}
     for ft in ft_list
-      call sonokai#ft_write(rootpath, ft, content) " Write the content.
+      call sonokai_belf#ft_write(rootpath, ft, content) " Write the content.
     endfor
   endfor
-  call sonokai#ft_write(rootpath, 'text', "let g:sonokai_last_modified = '" . a:last_modified . "'") " Write the last modified time to `after/ftplugin/text/sonokai.vim`
+  call sonokai_belf#ft_write(rootpath, 'text', "let g:sonokai_belf_last_modified = '" . a:last_modified . "'") " Write the last modified time to `after/ftplugin/text/sonokai_belf.vim`
   if a:msg ==# 'update'
-    echohl WarningMsg | echom '[sonokai] Updated ' . rootpath . '/after/ftplugin' | echohl None
+    echohl WarningMsg | echom '[sonokai_belf] Updated ' . rootpath . '/after/ftplugin' | echohl None
   else
-    echohl WarningMsg | echom '[sonokai] Generated ' . rootpath . '/after/ftplugin' | echohl None
+    echohl WarningMsg | echom '[sonokai_belf] Generated ' . rootpath . '/after/ftplugin' | echohl None
   endif
 endfunction "}}}
-function! sonokai#ft_write(rootpath, ft, content) "{{{
+function! sonokai_belf#ft_write(rootpath, ft, content) "{{{
   " Write the content.
-  let ft_path = a:rootpath . '/after/ftplugin/' . a:ft . '/sonokai.vim' " The path of a ftplugin file.
+  let ft_path = a:rootpath . '/after/ftplugin/' . a:ft . '/sonokai_belf.vim' " The path of a ftplugin file.
   " create a new file if it doesn't exist
   if !filereadable(ft_path)
     call mkdir(a:rootpath . '/after/ftplugin/' . a:ft, 'p')
     call writefile([
-          \ "if !exists('g:colors_name') || g:colors_name !=# 'sonokai'",
+          \ "if !exists('g:colors_name') || g:colors_name !=# 'sonokai_belf'",
           \ '    finish',
           \ 'endif'
-          \ ], ft_path, 'a') " Abort if the current color scheme is not sonokai.
+          \ ], ft_path, 'a') " Abort if the current color scheme is not sonokai_belf.
     call writefile([
-          \ "if index(g:sonokai_loaded_file_types, '" . a:ft . "') ==# -1",
-          \ "    call add(g:sonokai_loaded_file_types, '" . a:ft . "')",
+          \ "if index(g:sonokai_belf_loaded_file_types, '" . a:ft . "') ==# -1",
+          \ "    call add(g:sonokai_belf_loaded_file_types, '" . a:ft . "')",
           \ 'else',
           \ '    finish',
           \ 'endif'
           \ ], ft_path, 'a') " Abort if this file type has already been loaded.
   endif
-  " If there is something like `call sonokai#highlight()`, then add
+  " If there is something like `call sonokai_belf#highlight()`, then add
   " code to initialize the palette and configuration.
-  if matchstr(a:content, 'sonokai#highlight') !=# ''
-    call writefile(['let s:configuration = sonokai#get_configuration()', 'let s:palette = sonokai#get_palette(s:configuration.style)'], ft_path, 'a')
+  if matchstr(a:content, 'sonokai_belf#highlight') !=# ''
+    call writefile(['let s:configuration = sonokai_belf#get_configuration()', 'let s:palette = sonokai_belf#get_palette(s:configuration.style)'], ft_path, 'a')
   endif
   " Append the content.
   call writefile(split(a:content, "\n"), ft_path, 'a')
 endfunction "}}}
-function! sonokai#ft_rootpath(path) "{{{
+function! sonokai_belf#ft_rootpath(path) "{{{
   " Get the directory where `after/ftplugin` is generated.
   if (matchstr(a:path, '^/usr/share') ==# '') || has('win32') " Return the plugin directory. The `after/ftplugin` directory should never be generated in `/usr/share`, even if you are a root user.
-    return substitute(a:path, '/colors/sonokai\.vim$', '', '')
+    return substitute(a:path, '/colors/sonokai_belf\.vim$', '', '')
   else " Use vim home directory.
     if has('nvim')
       return stdpath('config')
@@ -235,17 +235,17 @@ function! sonokai#ft_rootpath(path) "{{{
     endif
   endif
 endfunction "}}}
-function! sonokai#ft_newest(path, last_modified) "{{{
-  " Determine whether the current ftplugin files are up to date by comparing the last modified time in `colors/sonokai.vim` and `after/ftplugin/text/sonokai.vim`.
-  let rootpath = sonokai#ft_rootpath(a:path)
-  execute 'source ' . rootpath . '/after/ftplugin/text/sonokai.vim'
-  return a:last_modified ==# g:sonokai_last_modified ? 1 : 0
+function! sonokai_belf#ft_newest(path, last_modified) "{{{
+  " Determine whether the current ftplugin files are up to date by comparing the last modified time in `colors/sonokai_belf.vim` and `after/ftplugin/text/sonokai_belf.vim`.
+  let rootpath = sonokai_belf#ft_rootpath(a:path)
+  execute 'source ' . rootpath . '/after/ftplugin/text/sonokai_belf.vim'
+  return a:last_modified ==# g:sonokai_belf_last_modified ? 1 : 0
 endfunction "}}}
-function! sonokai#ft_clean(path, msg) "{{{
+function! sonokai_belf#ft_clean(path, msg) "{{{
   " Clean the `after/ftplugin` directory.
-  let rootpath = sonokai#ft_rootpath(a:path)
-  " Remove `after/ftplugin/**/sonokai.vim`.
-  let file_list = split(globpath(rootpath, 'after/ftplugin/**/sonokai.vim'), "\n")
+  let rootpath = sonokai_belf#ft_rootpath(a:path)
+  " Remove `after/ftplugin/**/sonokai_belf.vim`.
+  let file_list = split(globpath(rootpath, 'after/ftplugin/**/sonokai_belf.vim'), "\n")
   for file in file_list
     call delete(file)
   endfor
@@ -263,11 +263,11 @@ function! sonokai#ft_clean(path, msg) "{{{
     call delete(rootpath . '/after', 'd')
   endif
   if a:msg
-    echohl WarningMsg | echom '[sonokai] Cleaned ' . rootpath . '/after/ftplugin' | echohl None
+    echohl WarningMsg | echom '[sonokai_belf] Cleaned ' . rootpath . '/after/ftplugin' | echohl None
   endif
 endfunction "}}}
-function! sonokai#ft_exists(path) "{{{
-  return filereadable(sonokai#ft_rootpath(a:path) . '/after/ftplugin/text/sonokai.vim')
+function! sonokai_belf#ft_exists(path) "{{{
+  return filereadable(sonokai_belf#ft_rootpath(a:path) . '/after/ftplugin/text/sonokai_belf.vim')
 endfunction "}}}
 
 " vim: set sw=2 ts=2 sts=2 et tw=80 ft=vim fdm=marker fmr={{{,}}}:
